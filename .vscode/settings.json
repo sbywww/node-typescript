@@ -1,0 +1,39 @@
+{
+  "window.restoreFullscreen": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.fontLigatures": true,
+  "editor.lineNumbers": "on",
+  "editor.wordWrap": "on",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.fontSize": 11,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.DS_Store": true,
+    // "*/node_modules": true,
+    "**/.idea": true,
+    "**/.vscode": false,
+    "**/yarn.lock": true,
+    "**/tmp": true,
+    // "node_modules": true
+  },
+  "workbench.editor.highlightModifiedTabs": true,
+  "html.suggest.html5": true,
+  "npm-intellisense.scanDevDependencies": false,
+  // vscode update 이후 Quick Fix Path Error
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "vsicons.associations.files": [
+    {
+      "icon": "nunjucks",
+      "extensions": ["njk"],
+      "format": "svg"
+    }
+  ],
+  "compile-hero.disable-compile-files-on-did-save-code": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
+}
