@@ -12,7 +12,7 @@ class PostRepository extends Repository {
     WHERE 1 = 1
     ORDER BY reg_date DESC;
     `;
-    const rows = await this.query(sql);
+    const rows = await this.execute(sql);
 
     const postList: Post[] = [];
     for (const row of rows) {
@@ -40,7 +40,7 @@ class PostRepository extends Repository {
     WHERE id = ?
     `;
 
-    const row = await this.queryForObject(sql, [id]);
+    const row = await this.executeForObject(sql, [id]);
     if (!row) return null;
 
     const post: Post = {
@@ -61,7 +61,7 @@ class PostRepository extends Repository {
     INSERT INTO Post (title, content, author, reg_date, mod_date)
     VALUES (?, ?, ?, now(), now());
     `;
-    await this.query(sql, [postDto.title, postDto.content, postDto.author]);
+    await this.execute(sql, [postDto.title, postDto.content, postDto.author]);
   }
 
   public async modPost(id: number | string, postDto: PostDto) {
@@ -69,7 +69,7 @@ class PostRepository extends Repository {
     const sql = `
     UPDATE Post SET title = ?, content = ?, author = ? WHERE id = ?;
     `;
-    await this.query(sql, [postDto.title, postDto.content, postDto.author, id]);
+    await this.execute(sql, [postDto.title, postDto.content, postDto.author, id]);
   }
 
   public async delPost(id: number | string) {
@@ -77,7 +77,7 @@ class PostRepository extends Repository {
     const sql = `
     DELETE FROM Post WHERE id = ?;
     `;
-    await this.query(sql, [id]);
+    await this.execute(sql, [id]);
   }
 }
 

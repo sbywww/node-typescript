@@ -1,6 +1,6 @@
 import mysql, { RowDataPacket } from "mysql2/promise";
 import { env } from "../configs/env";
-import Log from "../utils/logger";
+import Log from "../utils/Logger";
 
 interface Query {
   sql: string;
@@ -19,7 +19,7 @@ class Repository {
       database: env.database.name,
       dateStrings: true,
       charset: "utf8mb4",
-      connectionLimit: 10,
+      connectionLimit: 50,
     });
   }
 
@@ -47,7 +47,7 @@ class Repository {
     return rows;
   }
 
-  public async query(sql: string, params?: any): Promise<any> {
+  public async execute(sql: string, params?: any | any[] | { [param: string]: any }): Promise<any> {
     let rows = null;
     const conn = await this.pool.getConnection();
     try {
@@ -69,7 +69,7 @@ class Repository {
     return rows;
   }
 
-  public async queryForObject(sql: string, params?: any): Promise<any> {
+  public async executeForObject(sql: string, params: any | any[] | { [param: string]: any }): Promise<any> {
     let rows = null;
     const conn = await this.pool.getConnection();
     try {
@@ -78,7 +78,7 @@ class Repository {
       Log.debug("sql: %s", sql);
       Log.debug("params: %o", params);
       const result = await conn.execute(sql, params);
-      rows = result[0] as RowDataPacket[0][0];
+      rows = result[0] as RowDataPacket[][];
 
       await conn.commit();
     } catch (e) {
@@ -91,7 +91,7 @@ class Repository {
     return rows[0];
   }
 
-  public async bulkQuery(queries: Query[]): Promise<void> {
+  public async bulkExecute(queries: Query[]): Promise<void> {
     const conn = await this.pool.getConnection();
     try {
       await conn.beginTransaction();

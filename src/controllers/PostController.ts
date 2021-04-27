@@ -72,6 +72,13 @@ class PostController implements Controller {
   public modPost = async (req: Request, res: Response) => {
     const id = req.params.id;
     const postDto: PostDto = req.body;
+
+    const post = await this.postService.getPost(id);
+
+    if (!post) {
+      return res.json({ success: false, msg: "존재하는 게시판이 없습니다.", code: 404 });
+    }
+
     await this.postService.modPost(id, postDto);
 
     return res.json({
@@ -85,6 +92,13 @@ class PostController implements Controller {
    */
   public delPost = async (req: Request, res: Response) => {
     const id = req.params.id;
+
+    const post = await this.postService.getPost(id);
+
+    if (!post) {
+      return res.json({ success: false, msg: "존재하는 게시판이 없습니다.", code: 404 });
+    }
+
     await this.postService.delPost(id);
 
     return res.json({
